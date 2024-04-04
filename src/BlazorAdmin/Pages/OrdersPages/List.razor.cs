@@ -4,65 +4,28 @@ using BlazorAdmin.Helpers;
 using BlazorShared.Interfaces;
 using BlazorShared.Models;
 
-namespace BlazorAdmin.OrdersPage.Orders;
+namespace BlazorAdmin.Pages.OrderPage;
 
 public partial class List : BlazorComponent
 {
     [Microsoft.AspNetCore.Components.Inject]
-    public ICatalogItemService CatalogItemService { get; set; }
+    public IOrderService OrderService { get; set; }
 
-    [Microsoft.AspNetCore.Components.Inject]
-    public ICatalogLookupDataService<CatalogBrand> CatalogBrandService { get; set; }
-
-    [Microsoft.AspNetCore.Components.Inject]
-    public ICatalogLookupDataService<CatalogType> CatalogTypeService { get; set; }
-
-    private List<CatalogItem> catalogItems = new List<CatalogItem>();
-    private List<CatalogType> catalogTypes = new List<CatalogType>();
-    private List<CatalogBrand> catalogBrands = new List<CatalogBrand>();
-
-    private Edit EditComponent { get; set; }
-    private Delete DeleteComponent { get; set; }
-    private Details DetailsComponent { get; set; }
-    private Create CreateComponent { get; set; }
+    private List<Order> orders = new List<Order>();
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            catalogItems = await CatalogItemService.List();
-            catalogTypes = await CatalogTypeService.List();
-            catalogBrands = await CatalogBrandService.List();
-
+            orders = await OrderService.List();
             CallRequestRefresh();
         }
 
         await base.OnAfterRenderAsync(firstRender);
     }
-
-    private async void DetailsClick(int id)
+    private async Task ReloadOrders()
     {
-        await DetailsComponent.Open(id);
-    }
-
-    private async Task CreateClick()
-    {
-        await CreateComponent.Open();
-    }
-
-    private async Task EditClick(int id)
-    {
-        await EditComponent.Open(id);
-    }
-
-    private async Task DeleteClick(int id)
-    {
-        await DeleteComponent.Open(id);
-    }
-
-    private async Task ReloadCatalogItems()
-    {
-        catalogItems = await CatalogItemService.List();
+        orders = await OrderService.List();
         StateHasChanged();
     }
 }

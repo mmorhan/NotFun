@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 
 namespace BlazorShared.Models;
-public class CreaetOrderRequest
+public class CreateOrderRequest
 {
     public int Id { get; protected set; }
     public string BuyerId { get; private set; }

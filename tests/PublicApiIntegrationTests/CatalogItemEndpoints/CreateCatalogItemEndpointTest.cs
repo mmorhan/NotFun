@@ -44,11 +44,11 @@ public class CreateCatalogItemEndpointTest
         var stringResponse = await response.Content.ReadAsStringAsync();
         var model = stringResponse.FromJson<CreateCatalogItemResponse>();
 
-        Assert.AreEqual(_testBrandId, model!.CatalogItem.CatalogBrandId);
-        Assert.AreEqual(_testTypeId, model.CatalogItem.CatalogTypeId);
-        Assert.AreEqual(_testDescription, model.CatalogItem.Description);
-        Assert.AreEqual(_testName, model.CatalogItem.Name);
-        Assert.AreEqual(_testPrice, model.CatalogItem.Price);
+        Assert.AreEqual(_testBrandId, model!.CatalogItems.CatalogBrandId);
+        Assert.AreEqual(_testTypeId, model.CatalogItems.CatalogTypeId);
+        Assert.AreEqual(_testDescription, model.CatalogItems.Description);
+        Assert.AreEqual(_testName, model.CatalogItems.Name);
+        Assert.AreEqual(_testPrice, model.CatalogItems.Price);
     }
 
     private StringContent GetValidNewItemJson()
