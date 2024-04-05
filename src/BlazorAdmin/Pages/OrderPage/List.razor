@@ -1,0 +1,7 @@
+﻿@page "/admin-orders"
+@attribute [Authorize(Roles = BlazorShared.Authorization.Constants.Roles.ADMINISTRATORS)]
+@inherits BlazorAdmin.Helpers.BlazorComponent
+@namespace BlazorAdmin.Pages.OrderPage
+
+<PageTitle>eShopOnWeb Admin: Manage Product Order</PageTitle>
+<h1>Manage Orders</h1>

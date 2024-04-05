@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -40,10 +41,16 @@ public class OrderListEndpoint : IEndpoint<IResult, ListPagedOrderRequest, IRepo
 
         int totalItems = await itemRepository.CountAsync();
 
+
         var pagedSpec = new CustomerOrdersSpecification(
             buyerId: request.buyerId);
 
-        var items = await itemRepository.ListAsync(pagedSpec);
+        // var items = await itemRepository.ListAsync(pagedSpec);
+        var items = new List<Order>()
+        {
+
+
+        };
 
         response.Orders.AddRange(items.Select(_mapper.Map<OrderDto>));
 
