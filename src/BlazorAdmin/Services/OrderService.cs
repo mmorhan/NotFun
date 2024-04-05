@@ -18,7 +18,7 @@ public class OrderService : IOrderService
 
     public async Task<Order> Create(CreateOrderRequest order)
     {
-        var response = await _httpService.HttpPost<CreateOrderResponse>("orders", order);
+        var response = await _httpService.HttpPost<CreateOrderResponse>("order", order);
         return response?.Order;
     }
 
@@ -26,7 +26,7 @@ public class OrderService : IOrderService
     {
         _logger.LogInformation("Fetching orders from API.");
 
-        var orderListTask = _httpService.HttpGet<PagedOrderResponse>($"orders");
+        var orderListTask = _httpService.HttpGet<PagedOrderResponse>($"order-items");
         await Task.WhenAll(orderListTask);
         var orders = orderListTask.Result.Orders;
         return orders;
