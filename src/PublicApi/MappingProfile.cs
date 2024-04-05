@@ -18,8 +18,10 @@ public class MappingProfile : Profile
         CreateMap<CatalogBrand, CatalogBrandDto>()
             .ForMember(dto => dto.Name, options => options.MapFrom(src => src.Brand));
 
-        CreateMap<Order, OrderDto>();
-        CreateMap<OrderItem, OrderItemDto>();
-        CreateMap<CatalogItemOrdered, CatalogItemOrderedDto>();
+        // CreateMap<Order, OrderDto>().ReverseMap();
+        // CreateMap<OrderItem, OrderItemDto>().ReverseMap();
+        // CreateMap<CatalogItemOrdered, CatalogItemOrderedDto>().ReverseMap();
+        // CreateMap<Address, AddressDto>().ReverseMap();
+
     }
 }

@@ -100,7 +100,6 @@ public class OrderListEndpoint : IEndpoint<IResult, ListPagedOrderRequest, IRepo
         {
             response.PageCount = totalItems > 0 ? 1 : 0;
         }
-
         return Results.Ok(response);
     }
 }
