@@ -6,10 +6,10 @@ namespace Microsoft.eShopWeb.PublicApi.OrderEndpoints;
 public class OrderDto
 {
 
-    public int Id { get; protected set; }
-    public string BuyerId { get; private set; }
-    public DateTimeOffset OrderDate { get; private set; } = DateTimeOffset.Now;
-    public AddressDto ShipToAddress { get; private set; }
+    public int Id { get; set; }
+    public string BuyerId { get; set; }
+    public DateTimeOffset OrderDate { get; set; } = DateTimeOffset.Now;
+    public AddressDto ShipToAddress { get; set; }
     public List<OrderItemDto> OrderItems = new List<OrderItemDto>();
 
 }

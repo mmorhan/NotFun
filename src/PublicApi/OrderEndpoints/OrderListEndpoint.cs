@@ -27,9 +27,9 @@ public class OrderListEndpoint : IEndpoint<IResult, ListPagedOrderRequest, IRepo
     public void AddRoute(IEndpointRouteBuilder app)
     {
         app.MapGet("api/order-items",
-            async (int? pageSize, int? pageIndex, int? catalogBrandId, int? catalogTypeId, IRepository<Order> itemRepository) =>
+            async (int? pageSize, int? pageIndex, string? buyerId, IRepository<Order> itemRepository) =>
             {
-                return await HandleAsync(new ListPagedOrderRequest(), itemRepository);
+                return await HandleAsync(new ListPagedOrderRequest(pageSize, pageIndex, buyerId), itemRepository);
             })
             .Produces<ListPagedOrderResponse>()
             .WithTags("OrderEndpoints");
@@ -41,15 +41,53 @@ public class OrderListEndpoint : IEndpoint<IResult, ListPagedOrderRequest, IRepo
 
         int totalItems = await itemRepository.CountAsync();
 
-
         var pagedSpec = new CustomerOrdersSpecification(
-            buyerId: request.buyerId);
+            buyerId: request.BuyerId);
 
-        // var items = await itemRepository.ListAsync(pagedSpec);
-        var items = new List<Order>()
+        var items = new List<OrderDto>()
         {
-
-
+            new OrderDto(){
+                BuyerId="1",
+                OrderDate=DateTimeOffset.Now,
+                ShipToAddress=new AddressDto(){
+                    Id=1,
+                    City="Redmond",
+                },
+                OrderItems = new List<OrderItemDto>(){
+                    new OrderItemDto(){
+                        Id=1,
+                        UnitPrice=10,
+                        Units=1,
+                        ItemOrdered=new CatalogItemOrderedDto(){
+                            Id=1,
+                            CatalogItemId=1,
+                            ProductName="Product 1",
+                            PictureUri="https://picsum.photos/200/300",
+                        }
+                    }
+                }
+            },
+            new OrderDto(){
+                BuyerId="1",
+                OrderDate=DateTimeOffset.Now,
+                ShipToAddress=new AddressDto(){
+                    Id=1,
+                    City="Redmond",
+                },
+                OrderItems = new List<OrderItemDto>(){
+                    new OrderItemDto(){
+                        Id=1,
+                        UnitPrice=10,
+                        Units=1,
+                        ItemOrdered=new CatalogItemOrderedDto(){
+                            Id=1,
+                            CatalogItemId=1,
+                            ProductName="Product 1",
+                            PictureUri="https://picsum.photos/200/300",
+                        },
+                    },
+                }
+            }
         };
 
         response.Orders.AddRange(items.Select(_mapper.Map<OrderDto>));
